@@ -6,9 +6,14 @@ include("src/plotting.jl")
 
 
 using .Plotting
+using Statistics
 
+#load ribosomal gene list
+ribosomal_genes = readlines("data/ribosomal_genes_e_coli.txt")
 # ── load (or regenerate) the processed data bundle ───────────────────────────
-data = load_data()   # wrapper around load_processed_data()
+
+data = load_processed_data()   # wrapper around load_processed_data()
+
 
 # ── sector analysis: total *mass* fraction of rmf under C limitation ─────────
 Plotting.plot_sector_analysis(
