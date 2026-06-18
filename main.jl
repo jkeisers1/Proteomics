@@ -15,12 +15,14 @@ ribosomal_genes = readlines("data/ribosomal_genes_e_coli.txt")
 data = load_processed_data()   # wrapper around load_processed_data()
 
 
-# ── sector analysis: total *mass* fraction of rmf under C limitation ─────────
+# ── sector analysis: total concentration of rmf under C limitation ──────────
 Plotting.plot_sector_analysis(
-    ["hpf"],
-    limitation = :C_lim,
+    ["IF1"],
+    limitation = :R_lim,
     mode       = :concentration,
-    data       = data)
+    data       = data,
+    savepath   = "output/rmf_C_lim_concentration.png",
+    csvpath    = "output/rmf_C_lim_concentration.csv")
 
 # ── gene-length bins example – summed *concentration* under C & A limitation ─
 gene_length = [
@@ -37,7 +39,5 @@ Plotting.plot_gene_length_analysis(
     ylims = nothing,
     xlims = nothing,
     data        = data)
-
-
 
 

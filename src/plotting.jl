@@ -1,6 +1,6 @@
 module Plotting
 
-using DataFrames, JLD2, Plots
+using CSV, DataFrames, JLD2, Plots
 
 # ── Local project logic ------------------------------------------------------
 include("sector_analysis.jl")      # load_processed_data, analyze_gene_list
@@ -103,6 +103,7 @@ function plot_sector_analysis(gene_list::Vector{String};
                               ylims = nothing,
                               logscale::Bool = false,
                               savepath::Union{Nothing,String} = nothing,
+                              csvpath::Union{Nothing,String} = nothing,
                               kwargs...)
 
     df = analyze_gene_list(gene_list, data, limitation; mode = mode)
@@ -112,6 +113,11 @@ function plot_sector_analysis(gene_list::Vector{String};
 
     long = Symbol("Growthrate(1/h)")
     hasproperty(df, long) && rename!(df, long => :growth_rate)
+
+    if csvpath !== nothing
+        mkpath(dirname(csvpath))
+        CSV.write(csvpath, df)
+    end
 
     label_str = join(gene_list, ", ")
 
